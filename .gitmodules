@@ -1,0 +1,3 @@
+[submodule "metal-ama"]
+	path = metal-ama
+	url = https://github.com/mayeechen/metal-ama.git
