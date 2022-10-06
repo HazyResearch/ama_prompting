@@ -556,22 +556,6 @@ class StoryCloze(Decomposition):
         sentiment_b, sentiment_prompt = self.get_sentiment(choice_b, all_prompts, boost_examples, manifest, overwrite_manifest)
         sentiment_ex, sentiment_prompt = self.get_sentiment(example, all_prompts, boost_examples, manifest, overwrite_manifest) 
 
-        """
-        if boost_id == -1:
-            if sentiment_a == sentiment_b:
-                more_pos =self.get_sentiment_more_pos(choice_a, choice_b, all_prompts, boost_examples, manifest, overwrite_manifest)
-                if more_pos == 1:
-                    if sentiment_a < 1:
-                        sentiment_a += 1
-                    if sentiment_b > -1:
-                        sentiment_b -= 1
-                elif more_pos == 2:
-                    if sentiment_b < 1:
-                        sentiment_b += 1
-                    if sentiment_a > -1:
-                        sentiment_a -= 1
-        """
-
         # reconcile answer
         pred = ''
         if abs(sentiment_a - sentiment_ex) < abs(sentiment_b - sentiment_ex):
@@ -728,7 +712,6 @@ class StoryCloze(Decomposition):
 def main():
     args = get_args()
     args.num_boost = 6
-    args.do_few_shot = 0
     task_name = "story_cloze"
     data_dir = f"{DATA_DIR}/story_cloze"
     decomp = StoryCloze(task_name, data_dir, val_split="test")
