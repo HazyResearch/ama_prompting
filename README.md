@@ -21,7 +21,7 @@ This repository contains code for the Ask Me Anything (AMA) prompt-aggregation s
 ## Setup
 
 ### Installation
-Here we will setup the AMA code (prompting models for tasks), weak supervision code (aggregating predictions), and Manifest code (tooling for easily loading and running the models).
+Here we will setup the AMA code (prompting models for tasks), weak supervision code (aggregating predictions), and [Manifest](https://github.com/HazyResearch/manifest/) code (tooling for easily loading and running the models).
 
 We encourage the use of conda environments:
 ```
