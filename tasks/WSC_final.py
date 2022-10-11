@@ -243,27 +243,6 @@ class WSCDecomp(Decomposition):
     def read_data(self, save_dir, overwrite_data):
         return load_hf_data(save_dir, self.task_name, self.val_split, "SetFit/wsc_fixed", overwrite_data)
 
-    def read_data(self, save_dir, overwrite_data):
-        save_data = Path(f"{save_dir}/{self.task_name}/data.feather")
-        if not save_data.exists() or overwrite_data:
-            dataset = load_dataset("SetFit/wsc_fixed")
-            test_data = dataset["validation"].to_pandas()
-            test_data.to_feather(f"{save_data}")
-        else:
-            test_data = pd.read_feather(f"{save_data}")
-
-        save_data = Path(f"{save_dir}/{self.task_name}/train_data.feather")
-        if not save_data.exists() or overwrite_data:
-            dataset = load_dataset("SetFit/wsc_fixed")
-            train_data = dataset["train"].to_pandas()
-            train_data.to_feather(f"{save_data}")
-        else:
-            train_data = pd.read_feather(f"{save_data}")
-
-        print(f"Test Data Size: {len(test_data)}")
-        print(f"Train Data Size: {len(train_data)}")
-        return test_data, train_data
-
     def zero_few_baseline(
         self,
         test_data,
