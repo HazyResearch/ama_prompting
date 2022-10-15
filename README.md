@@ -146,7 +146,7 @@ Precision: 0.724
 Recall: 0.420
 F1: 0.531
 
-# For this task, the WS algorithm identifies a dependency between prompts 0 and 2. Next the code ouputs results after modelling dependencies, if dependencies are recovered above.
+# For this task, the WS algorithm identifies a dependency between prompts 0 and 2. Next the code outputs results after modelling dependencies, if dependencies are recovered above.
 
 Trained Label Model Metrics (with deps):
 Accuracy: 0.751
