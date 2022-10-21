@@ -1,6 +1,6 @@
 apex==0.1
 cvxpy==1.2.1
-datasets==2.4.0
+datasets==1.4.0
 dill==0.3.5.1
 GPUtil==1.4.0
 ipdb==0.13.9
