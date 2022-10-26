@@ -97,8 +97,7 @@ class DropDecomp(Decomposition):
             else:
                 labels.append(x['spans'][0])  
         train_data['expanded_labels'] = labels
-
-        labels = ["unknown"] + list(set(labels))
+        labels = ["unknown"] + list(sorted(set(labels)))
 
         num_per_class = int(np.ceil(k_shot / len(labels)))
         print(f"Selecting {num_per_class} examples per class.")

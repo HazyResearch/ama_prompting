@@ -505,9 +505,6 @@ class COPADecomp(Decomposition):
                     pred = '1'
                 elif ngram not in choice_a and ngram in choice_b:
                     pred = '2'
-        if not pred:
-            import pdb;
-            pdb.set_trace()
         return pred, ex_pmp
 
     def answer_question(self, question, passage, all_prompts, boost_examples, manifest, overwrite_manifest, option=1):

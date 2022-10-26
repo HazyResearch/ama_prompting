@@ -154,7 +154,7 @@ class DBPediaDecomp(Decomposition):
 
     def get_few_shot_examples(self, train_data, k_shot):
         """Get few shot examples"""
-        labels = set(train_data["targets_pretokenized"])
+        labels = sorted(set(train_data["targets_pretokenized"]))
         num_per_class = int(np.ceil(k_shot / len(labels)))
         print(f"Selecting {num_per_class} examples per class.")
 
