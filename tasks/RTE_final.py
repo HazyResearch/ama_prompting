@@ -407,6 +407,7 @@ class RTEDecomp(Decomposition):
         chopped_answer = get_response(
             quesiton_prompt,
             manifest,
+            overwrite=bool(overwrite_manifest),
             max_toks=50)
         chopped_answer = chopped_answer.split("\n")
         question = [ch for ch in chopped_answer if ch][0]
@@ -429,6 +430,7 @@ class RTEDecomp(Decomposition):
         answer = get_response(
             qa_prompt, 
             manifest, 
+            overwrite=bool(overwrite_manifest),
             max_toks=50
         )
         answer = answer.replace(",", "").replace(".", "").replace("?", "")
@@ -453,12 +455,13 @@ class RTEDecomp(Decomposition):
             pred = "False"
         return pred
 
-    def get_choices_answer(self, chopped_answer, cuttoff, prompt, boost_ex, manifest, get_choices_prompt=''):
+    def get_choices_answer(self, chopped_answer, cuttoff, prompt, boost_ex, manifest, overwrite_manifest, get_choices_prompt=''):
         prompt_suffix = prompt(boost_ex)
         prompt = f"{prompt_suffix}\n\nExample: {{example:}}\nList alternatives:\n- {{cuttoff:}}\n"
         choices_answer = get_response(
             prompt.format(example=chopped_answer, cuttoff=cuttoff), 
             manifest,
+            overwrite=bool(overwrite_manifest),
             max_toks = 30
         )
         choices_answer = choices_answer.split("\n\n")[0]
@@ -473,12 +476,13 @@ class RTEDecomp(Decomposition):
         choices_answer = [ch.strip(".") for ch in choices_answer]
         return choices_answer, prompt
     
-    def get_chopping(self, question, prompt, boost_ex, manifest, cuttoff_size=2, chopper_prompt=''):
+    def get_chopping(self, question, prompt, boost_ex, manifest, overwrite_manifest, cuttoff_size=2, chopper_prompt=''):
         prompt_suffix = prompt(boost_ex)
         prompt = f"{prompt_suffix}\n\nExample: {{question:}}\nOutput:"
         chopped_answer = get_response(
             prompt.format(question=question), 
             manifest, 
+            overwrite=bool(overwrite_manifest),
             max_toks = len(question.split())*4
         )
         chopped_answer = chopped_answer.split("\n")[0]  
@@ -496,7 +500,7 @@ class RTEDecomp(Decomposition):
         cuttoff = cuttoff.strip(".")
         return chopped_answer, cuttoff, prompt
 
-    def get_final_selection(self, choices_answer, passage, chopped_answer, prompt, boost_ex, manifest, selector_prompt=''):
+    def get_final_selection(self, choices_answer, passage, chopped_answer, prompt, boost_ex, manifest, overwrite_manifest, selector_prompt=''):
         prompt_suffix = prompt(boost_ex)
         select_choice_str = ""
         gold_choice = choices_answer[-1]
@@ -508,6 +512,7 @@ class RTEDecomp(Decomposition):
         select_answer = get_response(
             prompt.format(choices_str=select_choice_str, passage=passage, chopped_answer=chopped_answer), 
             manifest, 
+            overwrite=bool(overwrite_manifest),
             max_toks = max(len(c.split()) for c in choices_answer)
         )
         select_answer = select_answer.lower()
@@ -587,13 +592,13 @@ class RTEDecomp(Decomposition):
                         pred = self.resolve_pred(open_answer.lower(), open_answer)
                 else:
                     chopped_answer, cuttoff, chopper_prompt = self.get_chopping(
-                        statement, cloze_convertor, boost_examples[0], manifest, cuttoff_size=2)
+                        statement, cloze_convertor, boost_examples[0], manifest, overwrite_manifest, cuttoff_size=2)
 
                     choices_answer, choices_prompt = self.get_choices_answer(
-                        chopped_answer, cuttoff, cloze_choices, boost_examples[1], manifest)
+                        chopped_answer, cuttoff, cloze_choices, boost_examples[1], manifest, overwrite_manifest)
 
                     pred, selector_prompt = self.get_final_selection(
-                        choices_answer, passage, chopped_answer, cloze_completion, boost_examples[2], manifest)
+                        choices_answer, passage, chopped_answer, cloze_completion, boost_examples[2], manifest, overwrite_manifest)
 
                 prompts_across_boost.append(all_prompts)
                 preds_across_boost.append(pred)
