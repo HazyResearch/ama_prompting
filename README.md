@@ -131,7 +131,7 @@ For the AMA baseline, which consists of ```num_boost``` prompt-chains, the metri
 python3 boosting/run_ws.py \
 --task_name super_glue_rte \
 --data_dir ../ama_logs/ama_final_runs \
---model_prefix EleutherAI_gpt-j-6B
+--model_prefix EleutherAI_gpt-j-6B \
 --override_date 10052022
 ```
 
