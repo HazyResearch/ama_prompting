@@ -57,7 +57,7 @@ export AMA_DATA=<path>
 
 Please follow the instructions below to download all necessary data for experiments. 
  
-1. Download the PromptSource (P3) dataset from HuggingFace at https://huggingface.co/datasets/bigscience/P3.
+1. Download the PromptSource (P3) dataset from Hugging Face at https://huggingface.co/datasets/bigscience/P3.
 ```bash
 cd $AMA_DATA
 git lfs install
