@@ -312,8 +312,8 @@ class Aggregator():
             a[2] = 0.5*(np.sqrt(np.abs(M[i, k] * M[j, k] / M[i, j]))+1)
 
             # edge cases
-            a[np.where(np.isnan(a))[0]] = 0.5 
-            a[np.where(np.isinf(a))[0]] = 1
+            a[np.isnan(a)] = 0.5 
+            a[np.isinf(a)] = 1
 
             self.fs_accs[i, 1, 1] += a[0]
             self.fs_accs[j, 1, 1] += a[1]
